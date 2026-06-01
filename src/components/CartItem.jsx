@@ -1,5 +1,7 @@
+import { useState } from "react";
+
 function CartItem() {
-  const cartItems = [
+  const [cartItems, setCartItems] = useState([
     {
       id: 1,
       name: "Snake Plant",
@@ -14,7 +16,33 @@ function CartItem() {
       quantity: 1,
       image: "https://via.placeholder.com/150"
     }
-  ];
+  ]);
+
+  function increaseQuantity(id) {
+    setCartItems(
+      cartItems.map((item) =>
+        item.id === id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    );
+  }
+
+  function decreaseQuantity(id) {
+    setCartItems(
+      cartItems.map((item) =>
+        item.id === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  }
+
+  function deleteItem(id) {
+    setCartItems(
+      cartItems.filter((item) => item.id !== id)
+    );
+  }
 
   function calculateTotalAmount() {
     return cartItems.reduce(
@@ -37,17 +65,36 @@ function CartItem() {
 
           <p>Unit Price: ${item.price}</p>
 
-          <p>Total Cost: ${item.price * item.quantity}</p>
+          <p>
+            Total Cost: $
+            {item.price * item.quantity}
+          </p>
 
-          <button>-</button>
+          <button
+            onClick={() => decreaseQuantity(item.id)}
+          >
+            -
+          </button>
+
           <span>{item.quantity}</span>
-          <button>+</button>
 
-          <button>Delete</button>
+          <button
+            onClick={() => increaseQuantity(item.id)}
+          >
+            +
+          </button>
+
+          <button
+            onClick={() => deleteItem(item.id)}
+          >
+            Delete
+          </button>
         </div>
       ))}
 
-      <button onClick={() => alert("Coming Soon")}>
+      <button
+        onClick={() => alert("Coming Soon")}
+      >
         Checkout
       </button>
 
