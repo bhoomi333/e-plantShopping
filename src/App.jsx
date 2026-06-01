@@ -5,6 +5,10 @@ import ProductList from "./components/ProductList";
 function App() {
   const [showProductList, setShowProductList] = useState(false);
 
+  function handleGetStartedClick() {
+    setShowProductList(true);
+  }
+
   if (showProductList) {
     return <ProductList />;
   }
@@ -15,12 +19,12 @@ function App() {
 
       <p>
         Welcome to Paradise Nursery. Discover beautiful indoor and outdoor
-        plants that bring freshness and life to your home.
+        plants for your home and office.
       </p>
 
       <button
         className="get-started-btn"
-        onClick={() => setShowProductList(true)}
+        onClick={handleGetStartedClick}
       >
         Get Started
       </button>
